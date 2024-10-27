@@ -1,2 +1,5 @@
 .git
 ./.git
+**/.idea/
+**/expo/
+**/node_modules/

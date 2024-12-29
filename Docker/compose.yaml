@@ -1,0 +1,73 @@
+version: '3.8'
+services:
+  backend:
+    container_name: georges-Backend
+    build:
+      context: ..
+      dockerfile: Docker/Dockerfile.backend
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    volumes:
+      - backend:/app
+      -  ~/.m2/repository:/root/.m2/repository
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+        MYSQL_HOST: db
+        BACKEND_URL: http://backend:8080
+    networks:
+      - app_net
+
+  frontend:
+    container_name: georges-Frontend
+    build:
+      context: ..
+      dockerfile: Docker/Dockerfile.frontend
+    restart: unless-stopped
+    volumes:
+      - frontend:/app
+    ports:
+      - "80:80"
+      - "8081:8081"
+    networks:
+      - app_net
+
+  db:
+    container_name: georges-DataBase
+    image: mysql:8.0.19
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "--silent" ]
+      interval: 3s
+      retries: 5
+      start_period: 30s
+    networks:
+      - app_net
+    ports:
+      - "3316:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: georges
+      MYSQL_USER: georges
+      MYSQL_ROOT_PASSWORD: georges
+      MYSQL_PASSWORD: root
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: unless-stopped
+    ports:
+      - "2001:80"  # Accéder à phpMyAdmin via http://localhost:8081
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+    networks:
+      - app_net
+volumes:
+  db_data:
+  frontend:
+  backend:
+
+networks:
+  app_net:

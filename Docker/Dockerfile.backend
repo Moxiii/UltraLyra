@@ -1,0 +1,9 @@
+
+#=== BUILD THE BACKEND ===
+FROM maven:3.9.9
+WORKDIR /app
+COPY georgesBack/pom.xml ./
+RUN mvn install -DskipTests
+COPY georgesBack/src ./src
+EXPOSE 8080
+CMD ["mvn", "spring-boot:run"]

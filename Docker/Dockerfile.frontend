@@ -1,9 +1,9 @@
 
 #=== BUILD THE Frontend ===
 FROM node:18
-WORKDIR /app
+WORKDIR /app/GeorgesFront
 COPY GeorgesFront/package.json GeorgesFront/package-lock.json ./
 RUN npm install
 COPY GeorgesFront/ .
 EXPOSE 8081
-CMD ["npx", "expo" ,"start", "--web", "--host", "0.0.0.0"]
+CMD ["npx", "expo", "start", "--web", "--host", "lan"]

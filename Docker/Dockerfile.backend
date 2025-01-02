@@ -1,7 +1,7 @@
 
 #=== BUILD THE BACKEND ===
 FROM maven:3.9.9
-WORKDIR /app
+WORKDIR /app/GeorgesBack
 COPY georgesBack/pom.xml ./
 RUN mvn install -DskipTests
 COPY georgesBack/src ./src

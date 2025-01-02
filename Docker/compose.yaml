@@ -9,14 +9,13 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - backend:/app
+      - ../georgesBack:/app/GeorgesBack/
       -  ~/.m2/repository:/root/.m2/repository
     depends_on:
       db:
         condition: service_healthy
     environment:
         MYSQL_HOST: db
-        BACKEND_URL: http://backend:8080
     networks:
       - app_net
 
@@ -27,7 +26,7 @@ services:
       dockerfile: Docker/Dockerfile.frontend
     restart: unless-stopped
     volumes:
-      - frontend:/app
+      - ../GeorgesFront:/app/GeorgesFront
     ports:
       - "80:80"
       - "8081:8081"
@@ -66,8 +65,6 @@ services:
       - app_net
 volumes:
   db_data:
-  frontend:
-  backend:
 
 networks:
   app_net:

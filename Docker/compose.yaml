@@ -15,7 +15,9 @@ services:
       db:
         condition: service_healthy
     environment:
-        MYSQL_HOST: db
+        - MYSQL_HOST=db
+        - JAVA_OPTS=-Dspring.devtools.restart.enabled=true -Dspring.devtools.livereload.enabled=true
+        - SPRING_PROFILES_ACTIVE=dev
     networks:
       - app_net
 

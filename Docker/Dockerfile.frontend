@@ -5,7 +5,7 @@ WORKDIR /app/GeorgesFront
 COPY GeorgesFront/package.json GeorgesFront/package-lock.json ./
 RUN npm install
 COPY GeorgesFront/ .
-COPY entry.sh /entry.sh
+COPY ../Docker/entry.sh /entry.sh
 RUN chmod +x /entry.sh
 EXPOSE 8081
 CMD ["/entry.sh" , "frontend"]

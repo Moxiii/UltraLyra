@@ -9,7 +9,7 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - ../georgesBack:/app/GeorgesBack/
+      - ../georgesBack:/app/GeorgesBack
       -  ~/.m2/repository:/root/.m2/repository
     depends_on:
       db:
@@ -65,8 +65,24 @@ services:
       PMA_PORT: 3306
     networks:
       - app_net
+
+
+  rabbitmq:
+    container_name: rabbitMQ
+    restart: unless-stopped
+    image: rabbitmq:4.0-management
+    networks:
+      - app_net
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER = admin
+      - RABBITMQ_DEFAULT_PASSWORD = admin
 volumes:
   db_data:
-
+  rabbitmq_data:
 networks:
   app_net:

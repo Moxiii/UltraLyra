@@ -2,7 +2,7 @@
 set -e
 if [[ "$1" == "frontend" ]]; then
   echo "Launch frontend"
-  npx expo start --web --host 0.0.0.0]
+  npx expo start --web --lan
 fi
 if [[ "$1" == "backend" ]]; then
   echo "Start mvn backend"

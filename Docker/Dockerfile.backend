@@ -5,7 +5,7 @@ WORKDIR /app/GeorgesBack
 COPY georgesBack/pom.xml ./
 RUN mvn install -DskipTests
 COPY georgesBack/src ./src
-COPY entry.sh /entry.sh
+COPY ../Docker/entry.sh /entry.sh
 RUN chmod +x /entry.sh
 EXPOSE 8080
 CMD ["/entry.sh" , "backend"]

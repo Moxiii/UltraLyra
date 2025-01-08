@@ -18,6 +18,8 @@ services:
         - MYSQL_HOST=db
         - JAVA_OPTS=-Dspring.devtools.restart.enabled=true -Dspring.devtools.livereload.enabled=true
         - SPRING_PROFILES_ACTIVE=dev
+    env_file:
+      - ../Docker/.env
     networks:
       - app_net
 

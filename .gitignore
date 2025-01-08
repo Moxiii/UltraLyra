@@ -1,0 +1,10 @@
+.git
+./.git
+**/.idea/
+**/expo/
+**/node_modules/
+**/dist/
+*.env
+.env
+.expo
+**/expo/

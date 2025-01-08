@@ -1,0 +1,12 @@
+[submodule "front"]
+  path = LyraFront 
+  url = git@github.com:Martindvttt/GeorgesFront.git
+[submodule "back"]
+  path = LyraBack
+  url = git@github.com:Moxiii/georgesBack.git
+[submodule "GeorgesFront"]
+	path = GeorgesFront
+	url = git@github.com:Martindvttt/GeorgesFront.git
+[submodule "georgesBack"]
+	path = georgesBack
+	url = git@github.com:Moxiii/georgesBack.git

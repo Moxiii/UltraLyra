@@ -14,11 +14,8 @@
 - Front : npx expo start --web
 - back mvn spring-boot:run
 ## Near goal is : 
-- dockerize app
-- make google auth
 - make google calendar
 - finish screen like update or create todo/projects or update user data
-- allowing post blob in DB for profile pic
 - build llm image
 - make conversation system
 - make group system

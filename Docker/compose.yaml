@@ -10,7 +10,7 @@ services:
       - "8080:8080"
     volumes:
       - ../georgesBack:/app/GeorgesBack
-      -  ~/.m2/repository:/root/.m2/repository
+      - ~/.m2/repository:/root/.m2/repository
     depends_on:
       db:
         condition: service_healthy
@@ -81,10 +81,31 @@ services:
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
     environment:
-      - RABBITMQ_DEFAULT_USER = admin
-      - RABBITMQ_DEFAULT_PASSWORD = admin
+       RABBITMQ_DEFAULT_USER: admin
+       RABBITMQ_DEFAULT_PASSWORD: admin
+
+  falcon:
+    container_name: falcon_AI
+    restart: unless-stopped
+    build:
+      context: ..
+      dockerfile: Docker/Dockerfile.LLM
+    env_file:
+      - .env
+    environment:
+      - HUGGING_FACE_HUB_TOKEN=${HUGGING_FACE_TOKEN}
+    ports:
+      - "8000:8000"
+    devices:
+      - "/dev/kfd"
+      - "/dev/dri"
+    ipc: "host"
+    profiles:
+      - llm
+
 volumes:
   db_data:
   rabbitmq_data:
+
 networks:
   app_net:

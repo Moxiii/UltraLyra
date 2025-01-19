@@ -1,0 +1,20 @@
+FROM rocm/tensorflow:latest
+
+WORKDIR app/LLM/
+
+RUN apt-get update && apt-get install --no-install-recommends -y \
+    python3-pip git\
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+RUN pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/rocm5.6 \
+    && pip3 install transformers[torch] accelerate vllm==0.1.0
+
+
+RUN mkdir -p /models && \
+    python3 -c "from transformers import AutoModelForCausalLM; \
+    AutoModelForCausalLM.from_pretrained('tiiuae/Falcon-7B-Instruct', \
+    cache_dir='/models', use_auth_token=True)"
+
+COPY ../Docker/entry.sh /entry.sh
+RUN chmod +x /entry.sh
+CMD ["/entry.sh" , "LLM"]

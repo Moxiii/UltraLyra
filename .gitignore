@@ -8,3 +8,6 @@
 .env
 .expo
 **/expo/
+mistral*
+**/mistral.js
+**mistral.js

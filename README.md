@@ -13,12 +13,13 @@
 ## Run : 
 - Front : npx expo start --web
 - back mvn spring-boot:run
-## Near goal is : 
-- make google calendar
-- finish screen like update or create todo/projects or update user data
-- build llm image
-- make conversation system
-- make group system
-- make Github connection for dev
-- link repo to projects
+## Near goals : 
+- Finish Calendar API and FRONT for connecting GOOGLE agenda into it. 
+- finish screens → AT LEAST fetch / context for make postman useless :).
+- build llm image → Ollama run on a local server, but I will make LLM image.
+- make conversation / group system → WIP.
+## Future goals : 
+- make GitHub connection for dev.
+- link repo to projects.
+- make organisation tools for n+x 
   

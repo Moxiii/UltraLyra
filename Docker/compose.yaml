@@ -1,7 +1,6 @@
-version: '3.8'
 services:
   backend:
-    container_name: georges-Backend
+    container_name: Backend
     build:
       context: ..
       dockerfile: Docker/Dockerfile.backend
@@ -9,36 +8,39 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - ../georgesBack:/app/GeorgesBack
+      - ../LyraBack:/app/Backend
       - ~/.m2/repository:/root/.m2/repository
     depends_on:
-      db:
+      mysql:
         condition: service_healthy
     environment:
         - MYSQL_HOST=db
         - JAVA_OPTS=-Dspring.devtools.restart.enabled=true -Dspring.devtools.livereload.enabled=true
         - SPRING_PROFILES_ACTIVE=dev
+        - SPRING_REDIS_HOST=redis
+        - SPRING_REDIS_PORT=6379
+        - SPRING_MONGO_URI=mongodb://mongo:27017/georges
     env_file:
       - ../Docker/.env
     networks:
       - app_net
 
   frontend:
-    container_name: georges-Frontend
+    container_name: Frontend
     build:
       context: ..
       dockerfile: Docker/Dockerfile.frontend
     restart: unless-stopped
     volumes:
-      - ../GeorgesFront:/app/GeorgesFront
+      - ../LyraFront:/app/LyraFront
     ports:
       - "80:80"
       - "8081:8081"
     networks:
       - app_net
 
-  db:
-    container_name: georges-DataBase
+  mysql:
+    container_name: DataBase
     image: mysql:8.0.19
     restart: unless-stopped
     healthcheck:
@@ -57,6 +59,26 @@ services:
       MYSQL_USER: georges
       MYSQL_ROOT_PASSWORD: georges
       MYSQL_PASSWORD: root
+  redis:
+    container_name: redis
+    image: redis:6.2.6
+    command: [ "redis-server", "--appendonly", "yes" ]
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    networks:
+      - app_net
+
+  mongo:
+      container_name: mongo
+      image: mongo:5.0
+      restart: unless-stopped
+      ports:
+        - "27017:27017"
+      networks:
+        - app_net
+      volumes:
+        - mongo_data:/data/db
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     restart: unless-stopped
@@ -106,6 +128,7 @@ services:
 volumes:
   db_data:
   rabbitmq_data:
+  mongo_data:
 
 networks:
   app_net:

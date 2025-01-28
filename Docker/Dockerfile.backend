@@ -1,10 +1,10 @@
 
 #=== BUILD THE BACKEND ===
 FROM maven:3.9.9
-WORKDIR /app/GeorgesBack
-COPY georgesBack/pom.xml ./
+WORKDIR /app/Backend
+COPY LyraBack/pom.xml ./
 RUN mvn install -DskipTests
-COPY georgesBack/src ./src
+COPY LyraBack/src ./src
 COPY ../Docker/entry.sh /entry.sh
 RUN chmod +x /entry.sh
 EXPOSE 8080

@@ -22,6 +22,17 @@ services:
         - SPRING_MONGO_URI=mongodb://mongo:27017/georges
     env_file:
       - ../Docker/.env
+    develop:
+      watch:
+        - action: sync+restart
+          path: ../LyraBack/src
+          target: ../app/Backend/src
+          ignore:
+            - "**/target/"
+            - "**/node_modules"
+        - action: sync+restart
+          path: ../JDR-server/application.properties
+          target: /app/Backend/application.properties
     networks:
       - app_net
 
@@ -33,6 +44,9 @@ services:
     restart: unless-stopped
     volumes:
       - ../LyraFront:/app/LyraFront
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
     ports:
       - "80:80"
       - "8081:8081"

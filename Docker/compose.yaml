@@ -17,9 +17,6 @@ services:
       - MYSQL_HOST=db
       - JAVA_OPTS=-Dspring.devtools.restart.enabled=true -Dspring.devtools.livereload.enabled=true
       - SPRING_PROFILES_ACTIVE=dev
-      - SPRING_DATA_REDIS_HOST=redis
-      - SPRING_DATA_REDIS_PORT=6379
-      - SPRING_MONGO_URI=mongodb://mongo:27017/georges
     env_file:
       - ../Docker/.env
     develop:
